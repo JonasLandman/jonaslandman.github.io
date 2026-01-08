@@ -11,26 +11,96 @@ author_profile: true
 
 {% include base_path %}
 
-<!-- New style rendering if publication categories are defined -->
-{% if site.publication_category %}
-  {% for category in site.publication_category  %}
-    {% assign title_shown = false %}
-    {% for post in site.publications reversed %}
-      {% if post.category != category[0] %}
-        {% continue %}
-      {% endif %}
-      {% unless title_shown %}
-        <h2>{{ category[1].title }}</h2><hr />
-        {% assign title_shown = true %}
-      {% endunless %}
-      {% include archive-single.html %}
-    {% endfor %}
+<style>
+.publication-list {
+  list-style: none;
+  padding-left: 0;
+}
+.publication-list li {
+  margin-bottom: 1.5em;
+  line-height: 1.6;
+}
+.pub-title {
+  font-weight: normal;
+  margin-bottom: 0.3em;
+}
+.pub-authors {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 0.2em;
+}
+.pub-venue {
+  color: #666;
+}
+.pub-link {
+  margin-left: 0.5em;
+  font-size: 0.9em;
+}
+</style>
+
+<!-- Journals / Revues internationales -->
+<h2>Journals</h2>
+<ul class="publication-list">
+  {% assign journals = site.publications | where: "category", "manuscripts" | sort: "date" | reverse %}
+  {% for pub in journals %}
+    {% unless pub.title contains "Under review" or pub.venue contains "Under review" or pub.venue contains "arXiv preprint" %}
+    <li>
+      <div class="pub-title"><strong>{{ pub.title }}</strong> 
+        {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
+      </div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: '.' | first | append: '.' }}</div>
+      <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
+    </li>
+    {% endunless %}
   {% endfor %}
-{% else %}
-  {% for post in site.publications reversed %}
-    {% include archive-single.html %}
+</ul>
+
+<!-- Conferences -->
+<h2>Conferences</h2>
+<ul class="publication-list">
+  {% assign conferences = site.publications | where: "category", "conferences" | sort: "date" | reverse %}
+  {% for pub in conferences %}
+    <li>
+      <div class="pub-title"><strong>{{ pub.title }}</strong>
+        {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
+      </div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: '.' | first | append: '.' }}</div>
+      <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
+    </li>
   {% endfor %}
-{% endif %}
+</ul>
+
+<!-- Preprints / Articles soumis -->
+<h2>Preprints</h2>
+<ul class="publication-list">
+  {% assign preprints = site.publications | where: "category", "manuscripts" | sort: "date" | reverse %}
+  {% for pub in preprints %}
+    {% if pub.venue contains "Under review" or pub.venue contains "arXiv preprint" %}
+    <li>
+      <div class="pub-title"><strong>{{ pub.title }}</strong>
+        {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
+      </div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: '.' | first | append: '.' }}</div>
+      <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
+    </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+
+<!-- Thesis -->
+<h2>Thesis</h2>
+<ul class="publication-list">
+  {% assign thesis = site.publications | where: "category", "books" | sort: "date" | reverse %}
+  {% for pub in thesis %}
+    <li>
+      <div class="pub-title"><strong>{{ pub.title }}</strong>
+        {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
+      </div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: '.' | first | append: '.' }}</div>
+      <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
+    </li>
+  {% endfor %}
+</ul>
 
 
 

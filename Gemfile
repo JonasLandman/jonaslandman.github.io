@@ -11,3 +11,11 @@ end
 
 gem 'github-pages'
 gem 'connection_pool', '2.5.0'
+
+# Gems requis pour Ruby 4.0+
+gem 'csv'
+gem 'base64'
+gem 'logger'
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'ostruct'
