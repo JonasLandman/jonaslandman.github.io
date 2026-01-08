@@ -48,7 +48,7 @@ author_profile: true
       <div class="pub-title"><strong>{{ pub.title }}</strong> 
         {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
       </div>
-      <div class="pub-authors">{{ pub.citation | remove: '"' | split: '.' | first | append: '.' }}</div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first | append: '.' }}</div>
       <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
     </li>
     {% endunless %}
@@ -64,7 +64,7 @@ author_profile: true
       <div class="pub-title"><strong>{{ pub.title }}</strong>
         {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
       </div>
-      <div class="pub-authors">{{ pub.citation | remove: '"' | split: '.' | first | append: '.' }}</div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first | append: '.' }}</div>
       <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
     </li>
   {% endfor %}
@@ -80,7 +80,7 @@ author_profile: true
       <div class="pub-title"><strong>{{ pub.title }}</strong>
         {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
       </div>
-      <div class="pub-authors">{{ pub.citation | remove: '"' | split: '.' | first | append: '.' }}</div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first | append: '.' }}</div>
       <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
     </li>
     {% endif %}
@@ -96,7 +96,7 @@ author_profile: true
       <div class="pub-title"><strong>{{ pub.title }}</strong>
         {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
       </div>
-      <div class="pub-authors">{{ pub.citation | remove: '"' | split: '.' | first | append: '.' }}</div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first | append: '.' }}</div>
       <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
     </li>
   {% endfor %}
