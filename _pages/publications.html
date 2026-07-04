@@ -46,9 +46,9 @@ author_profile: true
     {% unless pub.title contains "Under review" or pub.venue contains "Under review" or pub.venue contains "arXiv preprint" %}
     <li>
       <div class="pub-title"><strong>{{ pub.title }}</strong> 
-        {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
+        {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[link]</a>{% endif %}
       </div>
-      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first }}.</div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first }}</div>
       <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
     </li>
     {% endunless %}
@@ -62,33 +62,41 @@ author_profile: true
   {% for pub in conferences %}
     <li>
       <div class="pub-title"><strong>{{ pub.title }}</strong>
-        {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
+        {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[link]</a>{% endif %}
       </div>
-      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first }}.</div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first }}</div>
       <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
     </li>
   {% endfor %}
 </ul>
 
 <!-- Preprints / Articles soumis -->
+{% assign preprints = site.publications | where: "category", "manuscripts" | sort: "date" | reverse %}
+{% assign preprint_count = 0 %}
+{% for pub in preprints %}
+  {% if pub.venue contains "Under review" or pub.venue contains "arXiv preprint" %}
+    {% assign preprint_count = preprint_count | plus: 1 %}
+  {% endif %}
+{% endfor %}
+{% if preprint_count > 0 %}
 <h2>Preprints</h2>
 <ul class="publication-list">
-  {% assign preprints = site.publications | where: "category", "manuscripts" | sort: "date" | reverse %}
   {% for pub in preprints %}
     {% if pub.venue contains "Under review" or pub.venue contains "arXiv preprint" %}
     <li>
       <div class="pub-title"><strong>{{ pub.title }}</strong>
-        {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
+        {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[link]</a>{% endif %}
       </div>
-      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first }}.</div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first }}</div>
       <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
     </li>
     {% endif %}
   {% endfor %}
 </ul>
+{% endif %}
 
 <!-- Thesis -->
-<h2>Thesis</h2>
+<h2>PhD Thesis</h2>
 <ul class="publication-list">
   {% assign thesis = site.publications | where: "category", "books" | sort: "date" | reverse %}
   {% for pub in thesis %}
@@ -96,7 +104,7 @@ author_profile: true
       <div class="pub-title"><strong>{{ pub.title }}</strong>
         {% if pub.paperurl %}<a href="{{ pub.paperurl }}" class="pub-link">[arxiv]</a>{% endif %}
       </div>
-      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first }}.</div>
+      <div class="pub-authors">{{ pub.citation | remove: '"' | split: ' (' | first }}</div>
       <div class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.date %}, {{ pub.date | date: "%Y" }}{% endif %}</div>
     </li>
   {% endfor %}
